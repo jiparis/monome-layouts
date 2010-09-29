@@ -32,7 +32,7 @@
 			{"type":"group", "of":"xfader", "channel": 1, "note": 26, "x":0, "y":0, "size": 7, "width":1, "height":8},
 		],
 		"6": [
-			{"type":"js", "file":"examples\\example.js", "channel": 1, "note":15, "x":0, "y":0, "width": 7, "height":8, "res":"1/2", "arg1": "Hello Monome"}
+			{"type":"js", "file":"examples\\seq.js", "channel": 7, "note":36, "x":0, "y":0, "width": 7, "height":8, "res":"1/8"}
 		],
 		"7": [
 			{"type":"js", "file":"examples\\boiing.js", "channel": 1, "note":71, "x":0, "y":0, "width": 7, "height":8, "res":"1/16"}
