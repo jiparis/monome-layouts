@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/json_simple-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/javaosc.jar"/>
+	<classpathentry kind="lib" path="lib/skymonome.jar" sourcepath="/skymonome"/>
+	<classpathentry kind="lib" path="lib/js.jar" sourcepath="D:/src/rhino1_7R2.zip"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

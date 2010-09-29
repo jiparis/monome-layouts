@@ -1,0 +1,41 @@
+{
+	"help": "remember bounds x0-6 y0-7 channel0-15",
+	"size": 64,
+	"host": "localhost",
+	"prefix": "/40h",
+	"portin": 8000,
+	"portout": 8080
+	"midiin": 0,
+	"midiout": 3,
+
+	"layout": {
+		"0": [
+			{"type":"xyfader","channel": 0, "note":35, "note2":36, "x":0, "y":0, "width": 7, "height":8}
+		],
+		"1": [	
+			{"type":"tracks",	"channel": 1, "note":15, "x":0, "y":0, "width": 7, "height":8}
+		],
+		"2": [
+			{"type":"note",	"channel": 1, "note": 35, "x":0, "y":0},
+			{"type":"cc", 	"channel": 1, "note": 24, "x":1, "y":0},
+			{"type":"toggle", "channel": 1, "note": 25, "x":2, "y":0},
+			{"type":"fader",	"channel": 1, "note": 26, "x":6, "y":0, "size": 7},
+			{"type":"xfader", "channel": 1, "note": 28, "x":0, "y":7, "size": 7},
+		],
+		"3": [
+			{"type":"group", "of":"note", "channel": 1, "note": 35, "x":0, "y":0, "width":7, "height":8}		
+		],
+		"4": [
+			{"type":"group", "of":"fader", "channel": 1, "note": 26, "x":0, "y":0, "size": 8, "width":7, "height":1},
+		],
+		"5": [
+			{"type":"group", "of":"xfader", "channel": 1, "note": 26, "x":0, "y":0, "size": 7, "width":1, "height":8},
+		],
+		"6": [
+			{"type":"js", "file":"examples\\example.js", "channel": 1, "note":15, "x":0, "y":0, "width": 7, "height":8, "res":"1/2", "arg1": "Hello Monome"}
+		],
+		"7": [
+			{"type":"js", "file":"examples\\boiing.js", "channel": 1, "note":71, "x":0, "y":0, "width": 7, "height":8, "res":"1/16"}
+		]
+	}
+}
