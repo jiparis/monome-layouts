@@ -1,5 +1,5 @@
 {
-	"help": "remember bounds x0-6 y0-7 channel0-15",
+	"help": "all settings are 0-based, i.e. x=[0-6] y=[0-7] channel=[0-15]",
 	"size": 64,
 	"host": "localhost",
 	"prefix": "/40h",
