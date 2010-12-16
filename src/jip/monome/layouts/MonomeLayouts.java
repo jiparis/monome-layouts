@@ -14,6 +14,7 @@ import jip.monome.layouts.components.CCButton;
 import jip.monome.layouts.components.CrossFader;
 import jip.monome.layouts.components.Fader;
 import jip.monome.layouts.components.JSObject;
+import jip.monome.layouts.components.Looper;
 import jip.monome.layouts.components.NoteButton;
 import jip.monome.layouts.components.XYFader;
 
@@ -173,6 +174,11 @@ public class MonomeLayouts{
 			int width = ((Number) obj.get("width")).intValue();
 			int height = ((Number) obj.get("height")).intValue();
 			p.addComponent(new JSObject(file, obj, channel, note, x, y, width, height));
+		}
+		else if ("7uplooper".equals(type)){
+			int width = ((Number) obj.get("width")).intValue();
+			int height = ((Number) obj.get("height")).intValue();
+			p.addComponent(new Looper("looper", obj, channel, note, x, y, width, height ));	
 		}
 		else{
 			log.warning("Type not found:" + type);

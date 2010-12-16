@@ -9,12 +9,13 @@ import jip.monome.layouts.ClockListener;
 import jip.monome.layouts.MidiManager;
 import jip.monome.layouts.NoteListener;
 import jip.monome.layouts.PatternRecorder;
+import jip.monome.layouts.Recordable;
 
 import sky.monome.LedButtonCouple.LedState;
 import sky.monome.exception.MonomeException;
 import sky.monome.frame.Frame;
 
-public class AbletonTracks extends MidiButtonGroup implements NoteListener, ClockListener {
+public class AbletonTracks extends MidiButtonGroup implements NoteListener, ClockListener, Recordable {
 	Logger log = Logger.getLogger(AbletonTracks.class.getName());
 	int controlCol;
 	int[] lastNoteOn;
@@ -60,6 +61,7 @@ public class AbletonTracks extends MidiButtonGroup implements NoteListener, Cloc
 			if (pressed) pressControl(x, y);
 	}
 
+	// REcordable
 	public void press (int xi, int yi){
 		int onVal = getCC() + (height * xi + yi);
 		midi.sendNoteOn(channel, onVal, 127);

@@ -40,13 +40,15 @@ public class XYFader extends MidiButtonGroup implements CCListener{
 	public void sendMidi(){
 
 		if (coordx != oldx){
-			int valuex = 127 * coordx / (getWidth() - 1);
-			MidiManager.getInstance().sendCC(getChannel(), getCC(), valuex);
+			//int valuex = 127 * coordx / (getWidth() - 1);
+			value1 = (int) Math.round(127.0f / (getWidth() - 1) * coordx);
+			MidiManager.getInstance().sendCC(getChannel(), getCC(), value1);
 		}
 		
 		if (coordy != oldy){// Y axis is inverted
-			int valuey = 127 * (getHeight() - coordy - 1) / (getHeight() - 1);
-			MidiManager.getInstance().sendCC(getChannel(), getCC2(), valuey);
+			//int valuey = 127 * (getHeight() - coordy - 1) / (getHeight() - 1);
+			value2 = (int) Math.round(127.0f / (getHeight() - 1) * (getHeight() - 1 - coordy));
+			MidiManager.getInstance().sendCC(getChannel(), getCC2(), value2);
 		}
 	}		
 
@@ -56,8 +58,9 @@ public class XYFader extends MidiButtonGroup implements CCListener{
 			value1 = m.getData2();
 		if (ccin == cc2)
 			value2 = m.getData2();
-		coordx = getValue() * (getWidth() - 1)/ 127;
-		coordy = getHeight() - (getValue2() * (getHeight() - 1) / 127) - 1;
+		coordx = Math.round(getValue() * (getWidth() - 1)/ 127.0f);
+		//coordx = Math.round((127.0f / (getWidth() - 1)) / getValue());
+		coordy = Math.round(getHeight() - (getValue2() * (getHeight() - 1) / 127.0f) - 1);
 		
 		refresh();		
 	}	
@@ -66,7 +69,7 @@ public class XYFader extends MidiButtonGroup implements CCListener{
 	public void writeOn(Frame frame) throws MonomeException {
 		for (int i = 0; i < getWidth(); i++)
 			for (int j = 0; j< getHeight(); j++)
-				frame.set(i, j, (i == coordx || j == coordy)? LedState.ON: LedState.OFF);
+				frame.set(i + getAbsoluteX(), j + getAbsoluteY(), (i == coordx || j == coordy)? LedState.ON: LedState.OFF);
 	}
 	
 	@Override

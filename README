@@ -51,7 +51,7 @@ It is possible to create several objects of the same type at once. It's useful f
 
 As you can see, "type" is set to "group", and the actual type is indicated in "of". Two more parameters are needed: "width" and "height" of the group.
 Each button in the group increments its "note" param by one, in a chromatic style. It is possible to alter this behavior, indicating an extra optional parameter "mode".
-Possible values for "mode" are "chromatic" (default) and "fourths". More to come.
+Possible values for "mode" are "chromatic" (default) and "fourths" (as Streta in this video: http://www.youtube.com/watch?v=uQm3xbTxJRc). More to come.
 
 XY
 This object represents a XY surface.

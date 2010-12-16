@@ -36,7 +36,7 @@ public class CrossFader extends Fader{
 				buttonx >= getAbsoluteX() && buttonx < getAbsoluteX() + size && 
 				buttony == getAbsoluteY()){
 			
-				value = (int) Math.ceil(127.0f / (size - 1) * (inverted? size - 1 - buttonx : buttonx ));
+				value = (int) Math.round(127.0f / (size - 1) * (inverted? size - 1 - (buttonx - getAbsoluteX()) : buttonx - getAbsoluteX()));
 				MidiManager.getInstance().sendCC(channel, cc, value);
 				}
 		}
@@ -51,8 +51,8 @@ public class CrossFader extends Fader{
 	@Override
 	public void writeOn(Frame frame) throws MonomeException {
 		for (int i = 0; i< size; i++){
-			if (value >= Math.round(127.0f / (size - 1) * (i - x)))
-				frame.set(getAbsoluteX() + (inverted? (size - 1 - i) : i), getAbsoluteY(), LedState.ON);	
+			if (value >= (int) Math.round((127.0f / (size - 1)) * (inverted? i : size - 1 - i)))
+				frame.set(getAbsoluteX() + (inverted? i: size - 1 - i), getAbsoluteY(), LedState.ON);	
 		}
 	}
 

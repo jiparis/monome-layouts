@@ -78,9 +78,9 @@ public class Fader extends Component implements CCListener{
 				buttonx == getAbsoluteX() &&
 				buttony >= getAbsoluteY() && buttony < getAbsoluteY() + size){
 			
-			value = (int) Math.ceil(127.0f / (size - 1) * (inverted? buttony : size - 1 - buttony));
-			MidiManager.getInstance().sendCC(channel, cc, value);
-		}
+				value = (int) Math.round(127.0f / (size - 1) * (inverted? buttony - getAbsoluteY(): size - 1 - (buttony - getAbsoluteY())));
+				MidiManager.getInstance().sendCC(channel, cc, value);
+			}
 		}
 		refresh();
 	}
@@ -93,8 +93,8 @@ public class Fader extends Component implements CCListener{
 	@Override
 	public void writeOn(Frame frame) throws MonomeException {
 		for (int i = 0; i< size; i++){
-			if (value >= Math.round(127.0f / (size - 1) * (i - y)))
-				frame.set(getAbsoluteX(), getAbsoluteY() + (inverted? i: size - 1 - i), LedState.ON);	
+			if (value >= (int) Math.round((127.0f / (size - 1)) * (inverted? i : size - 1 - i)))
+				frame.set(getAbsoluteX(), getAbsoluteY() + (inverted? size - 1 - i: i ), LedState.ON);	
 		}
 	}
 

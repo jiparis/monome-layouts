@@ -2,8 +2,6 @@ package jip.monome.layouts;
 
 import java.util.Vector;
 
-import jip.monome.layouts.components.AbletonTracks;
-
 public class PatternRecorder {
 	public static final int STOPPED = 1;
 	public static final int RECORDING = 2;
@@ -15,10 +13,10 @@ public class PatternRecorder {
 	
 	private Vector<ButtonEvent>[] steps;
 		
-	private AbletonTracks co;
+	private Recordable co;
 	
 	@SuppressWarnings("unchecked")
-	public PatternRecorder(AbletonTracks obj, int nsteps){
+	public PatternRecorder(Recordable obj, int nsteps){
 		this.co = obj;
 		this.nsteps = nsteps;
 		this.steps = new Vector[nsteps];
@@ -41,23 +39,25 @@ public class PatternRecorder {
 	int counter = 0;
 	public void step(){
 		switch (mode){
-		case PLAYING:		
-			if (mode == PLAYING){
-				Vector<ButtonEvent> events = steps[counter]; 
-				for(ButtonEvent ev: events){
-					//System.out.println("sending " + counter);
-					co.press(ev.xi, ev.yi);
-				}
-			}
-			counter ++;
-			if (counter == nsteps) counter = 0;
-			break;
 		case RECORDING:
 			counter ++;
 			if (counter == nsteps) {
 				counter = 0;
 				mode = PLAYING;
 			}
+			else
+				break;
+		case PLAYING:		
+			if (mode == PLAYING){
+				Vector<ButtonEvent> events = steps[counter]; 
+				for(ButtonEvent ev: events){
+					//System.out.println("sending " + counter + "." +ev.xi +"."+ ev.yi);
+					co.press(ev.xi, ev.yi);
+				}
+			}
+			counter ++;
+			if (counter == nsteps) counter = 0;
+			break;
 		}
 	}
 	
