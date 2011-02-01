@@ -1,6 +1,5 @@
 package jip.monome.layouts.components;
 
-import java.awt.Rectangle;
 import java.util.logging.Logger;
 
 import javax.sound.midi.ShortMessage;
@@ -8,111 +7,52 @@ import javax.sound.midi.ShortMessage;
 import jip.monome.layouts.CCListener;
 import jip.monome.layouts.MidiManager;
 
-import sky.monome.Component;
-import sky.monome.Monome;
 import sky.monome.LedButtonCouple.LedState;
 import sky.monome.exception.MonomeException;
 import sky.monome.frame.Frame;
-import sky.monome.util.OSCMessageDigester;
 
 
-public class Fader extends Component implements CCListener{
+public class Fader extends MidiButtonGroup implements CCListener{
 	Logger log = Logger.getLogger(Fader.class.getName());
 
-	int size, channel, cc, value;
+	int size;
 	boolean inverted = false;
 	
-	public Fader(String name, int channel, int cc, int x, int y, int size) {
+	public Fader(String name, int channel, int cc, int x, int y, int size) throws MonomeException {
 		this(name, channel, cc, x, y, size, false);		
 	}
 	
-	public Fader(String name, int channel, int cc, int x, int y, int size, boolean inverted) {
-		super(name, x, y);
+	public Fader(String name, int channel, int cc, int x, int y, int size, boolean inverted) throws MonomeException {
+		super(name, channel, cc, x, y, 1, size);
 		this.size = size;
-		this.channel = channel;
-		this.cc = cc;
 		this.inverted = inverted;
-		MidiManager.getInstance().plug(channel, this);	
 	}
 	
-	
 
 	@Override
-	public boolean canHaveParentContainer() {
-		return true;
-	}
-
-	@Override
-	public int getAbsoluteX() {
-		return container.getAbsoluteX() + x;
-	}
-
-	@Override
-	public int getAbsoluteY() {
-		return container.getAbsoluteY() + y;
-	}
-
-	@Override
-	public Rectangle getBounds() {
-		return new Rectangle(x, y, 1, size);
-	}
-
-	@Override
-	public Monome getMonome() {
-		return container.getMonome();
-	}
-
-	@Override
-	public boolean isVisible() {
-		return container.isVisible();
-	}
-
-	@Override
-	public void notify(OSCMessageDigester messageDigester)
-			throws MonomeException {
-		
-		if(messageDigester.getInstruction().equals("/press")){	
-			int buttonx = messageDigester.getArgument(Integer.class,0);
-			int buttony = messageDigester.getArgument(Integer.class,1);
-			if(	messageDigester.getArgument(Integer.class,2).equals(1) && // pressed
-				buttonx == getAbsoluteX() &&
-				buttony >= getAbsoluteY() && buttony < getAbsoluteY() + size){
-			
-				value = (int) Math.round(127.0f / (size - 1) * (inverted? buttony - getAbsoluteY(): size - 1 - (buttony - getAbsoluteY())));
-				MidiManager.getInstance().sendCC(channel, cc, value);
+	public void notify(boolean pressed, int x, int y){		
+		if(pressed){	
+				setValue((int) Math.round(127.0f / (size - 1) * (inverted? y: size - 1 - y)));
+				MidiManager.getInstance().sendCC(channel, getCC(), getValue());
 			}
-		}
+		
 		refresh();
-	}
-
-	@Override
-	public String toString() {
-		return "Fader: " + name;
 	}
 
 	@Override
 	public void writeOn(Frame frame) throws MonomeException {
 		for (int i = 0; i< size; i++){
-			if (value >= (int) Math.round((127.0f / (size - 1)) * (inverted? i : size - 1 - i)))
+			if (getValue() >= (int) Math.round((127.0f / (size - 1)) * (inverted? i : size - 1 - i)))
 				frame.set(getAbsoluteX(), getAbsoluteY() + (inverted? size - 1 - i: i ), LedState.ON);	
 		}
 	}
 
 	// CCListener
 	public void controllerChangeReceived(ShortMessage m) {
-		if (m.getData1() == cc){
-			value = m.getData2();
-			
+		if (m.getData1() == getCC()){
+			setValue(m.getData2());			
 			refresh();			
 		}
 		
-	}
-	
-	public void refresh(){
-		if (isVisible())
-			try {
-				getMonome().refresh();
-			} catch (MonomeException e) {				
-			}
 	}
 }

@@ -17,7 +17,6 @@ import javax.sound.midi.Transmitter;
 import javax.sound.midi.MidiDevice.Info;
 
 import sky.monome.Component;
-import sky.monome.Monome;
 
 @SuppressWarnings("unchecked")
 public class MidiManager implements Receiver{
@@ -27,7 +26,6 @@ public class MidiManager implements Receiver{
 	
 	public static Info[] infos;
 	MidiDevice inputDevice, outputDevice;
-	Monome monome;
 	private static Receiver outputReceiver;
 	private static Transmitter inputTransmitter;
 	private static HashSet<NoteListener>[] plugs_note = new HashSet[16];
@@ -48,10 +46,6 @@ public class MidiManager implements Receiver{
 			instance = new MidiManager();
 		}
 		return instance;
-	}
-	
-	public void setMonome(Monome m){
-		this.monome = m;
 	}
 
 	public void setOutputDevice(Info info) {
@@ -177,7 +171,7 @@ public class MidiManager implements Receiver{
 	}
 
 	// plugging
-	public void plug(int channel, Component obj){
+	public void plug(int channel, Object obj){
 		if (obj instanceof NoteListener)
 			plugs_note[channel].add((NoteListener) obj);
 		if (obj instanceof CCListener)

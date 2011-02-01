@@ -88,9 +88,10 @@ public class MonomeLayouts{
 			setupLayout (config);
 		} catch (MonomeException e) {
 			log.severe("Error loading layouts: " + e.getMessage());
-			e.printStackTrace();
 		}			
 		
+//		setupClock();
+
 		// Page listener
 		pageSelectionGroup.addButtonListener(changePageListener);		
 		
@@ -98,6 +99,41 @@ public class MonomeLayouts{
 		
 		monome.refresh();
 	}
+	
+//	private void setupClock(){
+//		midi.plug(0, new ClockListener(){
+//			final int ticksperbar = 24; // 1/4
+//			public void start() {
+//				counter = ticksperbar - 1;
+//			}
+//
+//			public void stop() {
+//				counter = 0;
+//			}
+//			
+//			int counter = 0;
+//			public void timingClockReceived() {
+//				counter ++;
+//				if (counter == ticksperbar){
+//					counter = 0;
+//					try {
+//						Radio r = pageSelectionGroup.getActiveRadio();
+//						if (r != null) {
+//							r.getLedButtonCouple().setLedState(LedState.OFF, true);
+//							Thread.sleep(25);
+//							r.getLedButtonCouple().setLedState(LedState.ON, true);
+//						}
+//					} catch (MonomeException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+//			}			
+//		});
+//	}
 	
 	public void setupLayout(JSONObject config) throws MonomeException{
 		midi.unplugAll();
@@ -212,7 +248,6 @@ public class MonomeLayouts{
 		
 	public void setupMidi(JSONObject config){
 		midi = MidiManager.getInstance();
-		midi.setMonome(this.monome);
 		Number input = (Number) config.get("midiin");
 		Number output = (Number) config.get("midiout");
 		midi.setInputDevice(MidiManager.getAvailableInputs().get(input.intValue()));
