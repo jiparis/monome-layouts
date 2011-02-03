@@ -92,7 +92,7 @@ public class MidiManager implements Receiver{
 		}
 	}
 
-	public static List<Info> getAvailableInputs() {
+	public List<Info> getAvailableInputs() {
 		List<Info> res = new Vector<Info>();
 		System.out.println("Available MIDI inputs:");
 		for (int i = 0; i < infos.length; i++){
@@ -112,7 +112,7 @@ public class MidiManager implements Receiver{
 		return res;
 	}
 
-	public static List<Info> getAvailableOutputs() {
+	public List<Info> getAvailableOutputs() {
 		List<Info> res = new Vector<Info>();
 		System.out.println("Available MIDI outputs:");
 		for (int i = 0; i < infos.length; i++){

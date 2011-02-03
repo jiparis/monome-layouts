@@ -250,12 +250,12 @@ public class MonomeLayouts{
 		midi = MidiManager.getInstance();
 		Number input = (Number) config.get("midiin");
 		Number output = (Number) config.get("midiout");
-		midi.setInputDevice(MidiManager.getAvailableInputs().get(input.intValue()));
-		midi.setOutputDevice(MidiManager.getAvailableOutputs().get(output.intValue()));	
+		midi.setInputDevice(midi.getAvailableInputs().get(input.intValue()));
+		midi.setOutputDevice(midi.getAvailableOutputs().get(output.intValue()));	
 	}
 	
 	public void shutdownMidi(){
-		System.out.println("Shuting down midi ...");
+		System.out.println("Shuting down midi ...");		
 		midi.closeOutputDevice();
 		midi.closeInputDevice();
 		System.out.println("Bye.");
@@ -301,6 +301,13 @@ public class MonomeLayouts{
 			System.out.println("Usage: layouts config-file.json");
 			System.exit(0);
 		}		
+		
+		if (args[0].equals("-l")){
+			// print midi devices
+			MidiManager.getInstance().getAvailableInputs();
+			MidiManager.getInstance().getAvailableOutputs();
+			System.exit(0);
+		}
 		
 		JSONObject parseresult = parseConfig(args[0]);		
 		if (parseresult == null) System.exit(0);
