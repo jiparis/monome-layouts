@@ -19,6 +19,8 @@ import org.mozilla.javascript.ScriptableObject;
 import sky.monome.exception.MonomeException;
 import sky.monome.frame.Frame;
 
+// TODO: expose more objects so that this become a whole javascript monome framework
+// TODO: normalize function names
 public class JSObject extends MidiButtonGroup implements CCListener,
 		NoteListener, ClockListener {
 	Logger log = Logger.getLogger(JSObject.class.getName());
