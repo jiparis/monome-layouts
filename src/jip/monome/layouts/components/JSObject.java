@@ -54,8 +54,8 @@ public class JSObject extends MidiButtonGroup implements CCListener,
 			cx.evaluateReader(scope, reader, filename, 1, null);			
 			
 			init = initFunction("init");
-			notify = initFunction("notify");
-			writeOn = initFunction("writeOn");
+			notify = initFunction("button");
+			writeOn = initFunction("leds");
 			ccReceived = initFunction("ccReceived");
 			noteOnReceived = initFunction("noteOnReceived");
 			noteOffReceived = initFunction("noteOffReceived");

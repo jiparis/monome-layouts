@@ -5,13 +5,13 @@ function init(){
   out.println(jsargs.get("arg1"));
 }
 
-function notify(pressed, x, y){
+function button(pressed, x, y){
 	state = pressed;
 	jsobject.refresh();
 	
 }
 
-function writeOn(frame){
+function leds(frame){
 	for (var i = 0; i< jsobject.getWidth(); i++){
 		for (var j = 0; j< jsobject.getHeight(); j++){
 			frame.set(i, j, state? LED_ON:LED_OFF);

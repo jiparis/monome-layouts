@@ -18,12 +18,12 @@ function init(){
   step = 0;
 }
 
-function notify(pressed, x, y){	
+function button(pressed, x, y){	
 	if (pressed) matrix[x][y] = !matrix[x][y];
 	jsobject.refresh();
 }
 
-function writeOn(frame){
+function leds(frame){
 	for (var i = 0; i < jsobject.getWidth(); i++){
 	  for (var j = 0; j < jsobject.getHeight(); j++){
 	  	frame.set(i, j, matrix[i][j]? LED_ON: LED_OFF);	  	

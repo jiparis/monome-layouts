@@ -23,7 +23,7 @@ function init(){
   note = parseInt(jsargs.get("note"));
 }
 
-function writeOn(frame){
+function leds(frame){
 	for (var i = 0; i< jsobject.getWidth(); i++){
 		for (var j = 0; j< jsobject.getHeight(); j++){
 			frame.set(i, j, (matrix[i]==j)? LED_ON:LED_OFF);
@@ -31,7 +31,7 @@ function writeOn(frame){
 	}
 }
 
-function notify(pressed, x, y){
+function button(pressed, x, y){
   if (pressed){
     values[x] = y;
     if (y == jsobject.getHeight() - 1){
