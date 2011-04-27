@@ -78,3 +78,4 @@ CREDITS
 This app is deeply inpired on monocontrol by Josh (http://post.monome.org/comments.php?DiscussionID=3357&page=1#Item_0). 
 Layouts uses some of the functionalities of the library Skymonome (http://www.skymonome.org/) by PJ Skyman
 Other libraries that uses are Javaosc (OSC communication) and Rhino (Javascript interpreter)
+=======
