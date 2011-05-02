@@ -34,11 +34,8 @@ public final class Monome extends Group
     /**
      * Constructs a logical Monome device with specified name, size, network addressing and prefix.
      * @param name Name of this Monome device.
-     * @param monomeSize Size of this Monome device.
-     * @param address Network address of this Monome device, typically "localhost".
      * @param prefix Prefix of this Monome device. Prefix is used by MonomeSerial. Typically "/40h".
      * @param portInNumber Port number for entering communication, typically 8000.
-     * @param portOutNumber Port number for outgoing communication, typically 8080.
      * @throws sky.monome.exception.MonomeException When it's impossible to create network connections with MonomeSerial.
      */
     public Monome(String name, String prefix,int portInNumber) throws MonomeException
@@ -64,6 +61,7 @@ public final class Monome extends Group
             
             int sizex = device.getSizeX();
             int sizey = device.getSizeY();
+            
             if (sizex == 8 && sizey == 8)
                 monomeSize = MonomeSize.MONOME_64;
             else if ((sizex == 8 && sizey == 16) || (sizey == 8 && sizex == 16))
