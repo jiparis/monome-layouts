@@ -1,10 +1,7 @@
 {
 	"help": "all settings are 0-based, i.e. x=[0-6] y=[0-7] channel=[0-15]",
-	"size": 64,
-	"host": "localhost",
 	"prefix": "/40h",
-	"portin": 8000,
-	"portout": 8080
+	"portin": 8421,
 	"midiin": 0,
 	"midiout": 3,
 

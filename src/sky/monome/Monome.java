@@ -1,23 +1,12 @@
 package sky.monome;
 
-import com.illposed.osc.OSCListener;
-import com.illposed.osc.OSCMessage;
-import com.illposed.osc.OSCPortIn;
-import com.illposed.osc.OSCPortOut;
 import java.awt.Dimension;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.Date;
-
 import jip.monome.serialosc.GridListener;
 import jip.monome.serialosc.MonomeDevice;
 import jip.monome.serialosc.MonomeZeroconf;
 import sky.monome.LedButtonCouple.LedState;
 import sky.monome.exception.MonomeException;
 import sky.monome.frame.DefaultFrame;
-import sky.monome.util.OSCMessageDigester;
 
 /**
  * Logical Monome device. Instances of this class must be always on top of Monome assembling trees.
@@ -52,13 +41,10 @@ public final class Monome extends Group
      * @param portOutNumber Port number for outgoing communication, typically 8080.
      * @throws sky.monome.exception.MonomeException When it's impossible to create network connections with MonomeSerial.
      */
-    public Monome(String name,MonomeSize monomeSize,String address,String prefix,int portInNumber,int portOutNumber) throws MonomeException
+    public Monome(String name, String prefix,int portInNumber) throws MonomeException
     {
-        super(name,0,0,monomeSize.getDimension().width,monomeSize.getDimension().height);
-        this.monomeSize=monomeSize;
-        try
-        {
-            //device=new MonomeConnection(address,prefix,portInNumber,portOutNumber);
+        super(name,0,0,8,8); //pass default values for dimension
+        try{
             MonomeZeroconf s = new MonomeZeroconf();
             String[] monomes;
 
@@ -75,6 +61,15 @@ public final class Monome extends Group
                      notifyPress(x, y, s);
                 }
             });
+            
+            int sizex = device.getSizeX();
+            int sizey = device.getSizeY();
+            if (sizex == 8 && sizey == 8)
+                monomeSize = MonomeSize.MONOME_64;
+            else if ((sizex == 8 && sizey == 16) || (sizey == 8 && sizex == 16))
+                monomeSize = MonomeSize.MONOME_128;
+            else
+                monomeSize = MonomeSize.MONOME_256;
         }
         catch (Exception e) {
             throw new MonomeException("Error connecting to serialosc", e);
@@ -201,85 +196,18 @@ public final class Monome extends Group
     {
         device.grid.all(state ? 1 : 0); //send(device.getPrefix()+"/clear",state?"1":"0");
     }
+    
+    @Override
+    public int getWidth() {
+        return device.getSizeX();
+    }
 
-    /**
-     * Connection class used for physical communication with the Monome device.
-     * @author PJ Skyman
-     */
-//    private class MonomeConnection
-//    {
-//        /**
-//         * Current prefix used for communicating with the Monome device.
-//         */
-//        private final String prefix;
-//        /**
-//         * Communication port used for listening physical events.
-//         */
-//        private final OSCPortIn portIn;
-//        /**
-//         * Communication port used for sending physical orders.
-//         */
-//        private final OSCPortOut portOut;
-//
-//        /**
-//         * Constructs a connection object with the specified connection informations and the specified logical Monome device.
-//         * @param monome Logical Monome device to attach to this connection object.
-//         * @param address Address of the Monome device.
-//         * @param prefix Current prefix of the Monome device.
-//         * @param portInNumber Port number for listening physical events (port in).
-//         * @param portOutNumber Port number for sending physical orders (port out).
-//         * @throws java.net.SocketException When troubles are encountered when establishing the physical connection with the Monome device.
-//         */
-//        private MonomeConnection(String address,String prefix,int portInNumber,int portOutNumber) throws SocketException,UnknownHostException
-//        {
-//            this.prefix=prefix;
-//            portIn=new OSCPortIn(portInNumber);
-//            OSCListener listener=new OSCListener()
-//            {
-//                public void acceptMessage(Date arg0,OSCMessage arg1)
-//                {
-//                    try
-//                    {
-//                        Monome.this.notify(new OSCMessageDigester(arg1));
-//                    }
-//                    catch(MonomeException e)
-//                    {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            };
-//            String[] listenedInstructions=
-//            {
-//                "/press",
-//                "/adc",
-//                "/enc"
-//            };
-//            for(String instruction:listenedInstructions)
-//                portIn.addListener(prefix+instruction,listener);
-//            portIn.startListening();
-//            portOut=new OSCPortOut(InetAddress.getByName(address),portOutNumber);
-//        }
-//
-//        /**
-//         * Returns the current prefix of the Monome device.
-//         * @return The current prefix of the Monome device.
-//         */
-//        private String getPrefix()
-//        {
-//            return prefix;
-//        }
-//
-//        /**
-//         * Sends a message to the Monome device.
-//         * @param instruction Instrution of the message.
-//         * @param arguments Arguments of the message.
-//         * @throws java.io.IOException When it is impossible to send the message.
-//         */
-//        private void send(String instruction,Object... arguments) throws IOException
-//        {
-//            portOut.send(new OSCMessage(instruction,arguments));
-//        }
-//    }
+    @Override
+    public int getHeight() {
+        return device.getSizeY();
+    }
+
+
 
     /**
      * Monome size.

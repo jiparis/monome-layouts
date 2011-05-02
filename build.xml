@@ -13,6 +13,8 @@
             <zipfileset excludes="META-INF/*.SF" src="lib/json_simple-1.1.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="lib/javaosc.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="lib/js.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="lib/jmdns.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="lib/serialosc-client.jar"/>
         </jar>
     </target>
 </project>

@@ -222,28 +222,11 @@ public class MonomeLayouts{
 	
 	}
 	
-	public Monome setupMonome(JSONObject config) throws MonomeException{
-		Number size = (Number) config.get("size");
-		MonomeSize msize = null;
-		switch(size.intValue()){		
-		case 128:
-			msize = MonomeSize.MONOME_128;
-			break;
-		case 256:
-			msize = MonomeSize.MONOME_256;
-			break;
-		case 64:
-		default:
-			msize = MonomeSize.MONOME_64;		
-		}
-		
-		String host = (String) config.get("host");
+	public Monome setupMonome(JSONObject config) throws MonomeException{				
 		String prefix = (String) config.get("prefix");
 		Number portin = (Number) config.get("portin");
-		Number portout = (Number) config.get("portout");
 		
-		log.info("Found monome config: " + size + "," + host + "," + prefix + "," + portin + "," + portout);
-		return new Monome("Monome", msize, host, prefix, portin.intValue(), portout.intValue());
+		return new Monome("Monome", prefix, portin.intValue());
 	}
 		
 	public void setupMidi(JSONObject config){
