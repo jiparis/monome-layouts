@@ -30,7 +30,7 @@ public class Fader extends MidiButtonGroup implements CCListener{
 	
 
 	@Override
-	public void notify(boolean pressed, int x, int y){		
+	public void press(int x, int y, boolean pressed){		
 		if(pressed){	
 				setValue((int) Math.round(127.0f / (size - 1) * (inverted? y: size - 1 - y)));
 				MidiManager.getInstance().sendCC(channel, getCC(), getValue());

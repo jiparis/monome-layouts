@@ -299,15 +299,21 @@ public class LedButtonCouple extends Component implements ButtonManager<LedButto
      * @throws sky.monome.exception.MonomeException When a problem has occured when treating the message.
      * By example, a led/button couple can treat a message by lighting on the led, and lighting on a led is a potentially risked operation.
      */
-    public void notify(OSCMessageDigester messageDigester) throws MonomeException
-    {
+    @Override
+    public void notifyPress(int x, int y, int status){
         synchronized(lockObject)
         {
-            if(messageDigester.getInstruction().equals("/press")&&messageDigester.getArgument(Integer.class,0).equals(getAbsoluteX())&&messageDigester.getArgument(Integer.class,1).equals(getAbsoluteY()))
+            if(x == getAbsoluteX()
+                && y == getAbsoluteY())
             {
-                ButtonAction buttonAction=messageDigester.getArgument(Integer.class,2).equals(1)?ButtonAction.BUTTON_PUSHED:ButtonAction.BUTTON_RELEASED;
+                ButtonAction buttonAction = status == 1 ? ButtonAction.BUTTON_PUSHED:ButtonAction.BUTTON_RELEASED;
                 setButtonState(ButtonState.getButtonStateForButtonAction(buttonAction));
-                getBehavior().notify(buttonAction);
+                try {
+                    getBehavior().notify(buttonAction);
+                } catch (MonomeException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 fireButtonActionned(this,buttonAction);
             }
         }

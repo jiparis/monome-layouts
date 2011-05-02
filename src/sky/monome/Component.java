@@ -131,13 +131,8 @@ public abstract class Component
         return container;
     }
 
-    /**
-     * Notifies this component that a message comes from the Monome device.
-     * @param messageDigester Message digester that prepares and encapsulates the message for an easy access of informations contained in the message.
-     * @throws sky.monome.exception.MonomeException When a problem has occured when treating the message.
-     * By example, a led/button couple can treat a message by lighting on the led, and lighting on a led is a potentially risked operation.
-     */
-    public abstract void notify(OSCMessageDigester messageDigester) throws MonomeException;
+    
+    public abstract void notifyPress(int x, int y, int status);
 
     /**
      * Writes this component on the specified frame in order to refresh the Monome device.

@@ -107,11 +107,11 @@ public abstract class AbstractPageSwitcher extends AbstractGroup<Page>
      * By example, a led/button couple can treat a message by lighting on the led, and lighting on a led is a potentially risked operation.
      */
     @Override
-    public void notify(OSCMessageDigester messageDigester) throws MonomeException
+    public void notifyPress(int x, int y, int status)
     {
         try
         {
-            getActivePage().notify(messageDigester);
+            getActivePage().notifyPress(x, y, status);
         }
         catch(NullPointerException e)
         {

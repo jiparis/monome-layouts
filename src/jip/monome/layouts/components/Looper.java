@@ -124,7 +124,7 @@ public class Looper extends MidiButtonGroup implements ClockListener, Recordable
 	}		
 
 	@Override
-	public void notify(boolean pressed, int x, int y) {			
+	public void press(int x, int y, boolean pressed) {			
 		if (pressed) {
 			pressLooper(x, y);
 		}

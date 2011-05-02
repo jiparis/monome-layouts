@@ -133,7 +133,7 @@ public class JSObject extends MidiButtonGroup implements CCListener,
 	}
 	
 	@Override
-	public void notify(boolean pressed, int x, int y) {
+	public void press(int x, int y, boolean pressed) {
 		try{
 			if (notify!=null){		
 				notify.call(cx, scope, scope, new Object[]{pressed, x, y});

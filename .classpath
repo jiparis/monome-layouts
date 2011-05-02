@@ -5,5 +5,7 @@
 	<classpathentry kind="lib" path="lib/json_simple-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/javaosc.jar"/>
 	<classpathentry kind="lib" path="lib/js.jar" sourcepath="D:/src/rhino1_7R2.zip"/>
+	<classpathentry kind="lib" path="lib/serialosc-client.jar"/>
+	<classpathentry kind="lib" path="lib/jmdns.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

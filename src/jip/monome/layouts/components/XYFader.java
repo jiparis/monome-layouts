@@ -25,7 +25,7 @@ public class XYFader extends MidiButtonGroup implements CCListener{
 	}	
 
 	@Override
-	public void notify(boolean pressed, int x, int y){
+	public void press(int x, int y, boolean pressed){
 		if (pressed){
 			coordx = x;
 			coordy = y;

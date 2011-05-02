@@ -46,7 +46,7 @@ public class AbletonTracks extends MidiButtonGroup implements NoteListener, Cloc
 	}
 
 	@Override
-	public void notify(boolean pressed, int x, int y) {
+	public void press(int x, int y, boolean pressed) {
 		
 		if (x < controlCol) {
 			if (pressed) {			

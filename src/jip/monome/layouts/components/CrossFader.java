@@ -29,7 +29,7 @@ public class CrossFader extends MidiButtonGroup implements CCListener{
 	}
 	
 	@Override
-	public void notify(boolean pressed, int x, int y){		
+	public void press(int x, int y, boolean pressed){		
 		if(pressed){				
 			setValue((int) Math.round(127.0f / (size - 1) * (inverted? size - 1 - x : x)));
 			MidiManager.getInstance().sendCC(channel, getCC(), getValue());

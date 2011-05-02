@@ -29,20 +29,15 @@ public abstract class MidiButtonGroup extends Container{
 	}
 	
 	@Override
-	public void notify(OSCMessageDigester messageDigester)
-			throws MonomeException {		
-		
-		if(messageDigester.getInstruction().equals("/press")){
-			int buttonx = messageDigester.getArgument(Integer.class,0);
-			int buttony = messageDigester.getArgument(Integer.class,1);
-			if(	getBounds().contains(buttonx, buttony)){
-				boolean pressed = messageDigester.getArgument(Integer.class,2).equals(1);
-				notify(pressed, buttonx - getAbsoluteX(), buttony - getAbsoluteY());
-			}
+	public void notifyPress(int x, int y, int status){				
+		// only notify if component in bounds
+	    if(	getBounds().contains(x, y)){
+	        // transform to local dimensions
+			press(x - getAbsoluteX(), y - getAbsoluteY(), status == 1? true: false);
 		}
 	}	
 	
-	public abstract void notify(boolean pressed, int x, int y);
+	public abstract void press(int x, int y, boolean pressed);
 
 	public int getChannel(){
 		return channel;
